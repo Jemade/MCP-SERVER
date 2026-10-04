@@ -66,11 +66,7 @@ class WeatherClient:
             raise ValueError("location name must contain 2..100 characters")
         params = {"name": name.strip(), "count": 5, "language": "en", "format": "json"}
         if country_code:
-            if (
-                len(country_code) != 2
-                or not country_code.isascii()
-                or not country_code.isalpha()
-            ):
+            if len(country_code) != 2 or not country_code.isascii() or not country_code.isalpha():
                 raise ValueError("use a two-letter country code")
             params["countryCode"] = country_code.upper()
         return await self.request("https://geocoding-api.open-meteo.com/v1/search", params)
