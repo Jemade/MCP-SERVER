@@ -69,3 +69,17 @@ async def test_timeout():
 async def test_coordinate_validation(args):
     with pytest.raises(ValueError):
         await WeatherClient().forecast(*args)
+
+
+@pytest.mark.parametrize("country_code", ["éZ", "ΖW", "ZWX", "Z1", "Z"])
+async def test_invalid_country_code_rejected_before_request(country_code):
+    calls = []
+
+    def handle(request):
+        calls.append(request)
+        return httpx.Response(200, json={"results": []})
+
+    client = WeatherClient(httpx.MockTransport(handle))
+    with pytest.raises(ValueError, match="two-letter country code"):
+        await client.locations("Harare", country_code)
+    assert calls == []
