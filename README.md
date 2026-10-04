@@ -184,3 +184,7 @@ The dependency range intentionally targets the SDK v1 maintenance line (`mcp<2`)
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development checks, regression tests and review expectations. Use the issue templates for reproducible bugs or concrete feature proposals.
