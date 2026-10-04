@@ -10,3 +10,13 @@ data/
 *.db-wal
 *.db-shm
 .env
+
+# Local runtime and private configuration
+venv/
+.mypy_cache/
+node_modules/
+.env.local
+.env.*.local
+*.sqlite
+*.sqlite3
+.DS_Store
