@@ -3,6 +3,7 @@
 import asyncio
 import json
 import time
+from copy import deepcopy
 from datetime import UTC, datetime
 
 import httpx
@@ -17,7 +18,7 @@ class WeatherClient:
         key = (url, tuple(sorted(params.items())))
         cached = self.cache.get(key)
         if cached and cached[0] > time.monotonic():
-            return {**cached[1], "cached": True}
+            return {**deepcopy(cached[1]), "cached": True}
         async with httpx.AsyncClient(
             transport=self.transport, timeout=10, follow_redirects=False, trust_env=False
         ) as client:
@@ -47,7 +48,7 @@ class WeatherClient:
                     }
                     if len(self.cache) >= 128:
                         self.cache.pop(next(iter(self.cache)))
-                    self.cache[key] = (time.monotonic() + 300, data)
+                    self.cache[key] = (time.monotonic() + 300, deepcopy(data))
                     return data
                 except httpx.HTTPStatusError as error:
                     raise ValueError(
