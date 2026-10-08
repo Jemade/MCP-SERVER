@@ -2,6 +2,7 @@
 
 import asyncio
 import json
+import math
 import time
 from copy import deepcopy
 from datetime import UTC, datetime
@@ -72,7 +73,12 @@ class WeatherClient:
         return await self.request("https://geocoding-api.open-meteo.com/v1/search", params)
 
     async def forecast(self, latitude, longitude, days=3):
-        if not -90 <= latitude <= 90 or not -180 <= longitude <= 180:
+        if (
+            not math.isfinite(latitude)
+            or not math.isfinite(longitude)
+            or not -90 <= latitude <= 90
+            or not -180 <= longitude <= 180
+        ):
             raise ValueError("invalid coordinates")
         if not 1 <= days <= 7:
             raise ValueError("forecast days must be 1..7")
