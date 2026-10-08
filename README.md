@@ -1,6 +1,6 @@
 # Personal Workspace MCP Server
 
-[![M8ven Score](https://m8ven.ai/badge/mcp/jemade-mcp-server-1scoex?v=e40fb92644882f041425b6aaa586ae06)](https://m8ven.ai/mcp/jemade-mcp-server-1scoex?s=readme)
+[![M8ven Score](https://m8ven.ai/badge/mcp/jemade-mcp-server-1scoex?v=7d4b5c646dee3d6dc04eb500831221ca)](https://m8ven.ai/mcp/jemade-mcp-server-1scoex?s=readme)
 
 A Python MCP server that gives an AI assistant three practical capabilities: manage personal tasks, answer questions from a local SQLite database, and retrieve weather forecasts.
 
