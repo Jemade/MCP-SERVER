@@ -1,5 +1,7 @@
 # Personal Workspace MCP Server
 
+[![M8ven Score](https://m8ven.ai/badge/mcp/jemade-mcp-server-1scoex?v=e40fb92644882f041425b6aaa586ae06)](https://m8ven.ai/mcp/jemade-mcp-server-1scoex?s=readme)
+
 A Python MCP server that gives an AI assistant three practical capabilities: manage personal tasks, answer questions from a local SQLite database, and retrieve weather forecasts.
 
 The server uses the official Model Context Protocol Python SDK. Natural-language interpretation happens in your MCP client: the assistant reads the schema, selects a tool and supplies validated arguments. This project does not contain a hidden chatbot or require an LLM API key.
