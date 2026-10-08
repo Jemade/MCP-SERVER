@@ -30,11 +30,13 @@ def create_server(task_path=None, query_path=None, allowed_tables=None, weather=
             "Use returned weather units and timestamps; do not invent missing forecasts."
         ),
     )
-    read = ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=False)
-    write = ToolAnnotations(readOnlyHint=False, destructiveHint=False, openWorldHint=False)
-    network = ToolAnnotations(readOnlyHint=True, destructiveHint=False, openWorldHint=True)
+    read = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=False)
+    create = ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=False, openWorldHint=False)
+    update = ToolAnnotations(readOnlyHint=False, destructiveHint=False, idempotentHint=False, openWorldHint=False)
+    archive = ToolAnnotations(readOnlyHint=False, destructiveHint=True, idempotentHint=False, openWorldHint=False)
+    network = ToolAnnotations(readOnlyHint=True, destructiveHint=False, idempotentHint=True, openWorldHint=True)
 
-    @mcp.tool(annotations=write)
+    @mcp.tool(annotations=create)
     def create_task(
         title: Annotated[str, Field(min_length=1, max_length=500)],
         description: Annotated[str, Field(max_length=10000)] = "",
@@ -62,7 +64,7 @@ def create_server(task_path=None, query_path=None, allowed_tables=None, weather=
         """Read one task, including its version for optimistic updates."""
         return store.get(task_id)
 
-    @mcp.tool(annotations=write)
+    @mcp.tool(annotations=update)
     def update_task(
         task_id: int,
         expected_version: int,
@@ -91,12 +93,12 @@ def create_server(task_path=None, query_path=None, allowed_tables=None, weather=
             changes["due_date"] = None
         return store.update(task_id, expected_version, changes)
 
-    @mcp.tool(annotations=write)
+    @mcp.tool(annotations=archive)
     def archive_task(task_id: int, expected_version: int) -> dict:
         """Archive a task without deleting its data or history."""
         return store.archive(task_id, expected_version)
 
-    @mcp.tool(annotations=write)
+    @mcp.tool(annotations=update)
     def restore_task(task_id: int, expected_version: int) -> dict:
         """Restore an archived task."""
         return store.archive(task_id, expected_version, False)
