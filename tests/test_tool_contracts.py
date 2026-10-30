@@ -1,10 +1,9 @@
 """Contract tests for every exposed MCP tool and its safety metadata."""
 
-from mcp.server.fastmcp.exceptions import ToolError
 import pytest
+from mcp.server.fastmcp.exceptions import ToolError
 
 from personal_mcp.server import create_server
-
 
 EXPECTED = {
     "create_task": (False, False, False, False),
