@@ -1,7 +1,7 @@
 """Contract tests for every exposed MCP tool and its safety metadata."""
 
-import pytest
 from mcp.server.fastmcp.exceptions import ToolError
+import pytest
 
 from personal_mcp.server import create_server
 
