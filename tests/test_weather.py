@@ -1,3 +1,5 @@
+import math
+
 import httpx
 import pytest
 
@@ -65,7 +67,7 @@ async def test_timeout():
         await WeatherClient(httpx.MockTransport(handle)).forecast(0, 0)
 
 
-@pytest.mark.parametrize("args", [(91, 0, 3), (0, 181, 3), (0, 0, 8)])
+@pytest.mark.parametrize("args", [(91, 0, 3), (0, 181, 3), (0, 0, 8), (math.nan, 0, 3), (0, math.inf, 3), (-math.inf, 0, 3)])
 async def test_coordinate_validation(args):
     with pytest.raises(ValueError):
         await WeatherClient().forecast(*args)
